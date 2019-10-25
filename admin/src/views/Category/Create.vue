@@ -1,11 +1,17 @@
 <template>
-  <div class="create">
+  <div>
     <h1>{{id ? "编辑" : "新建"}}分类</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
       <el-form-item label="上级分类">
         <el-select v-model="model.parents">
-          <el-option v-for="item in parents" :key="item._id" :label="item.name" :value="item._id"></el-option>
+          <el-option
+            v-for="category in parents"
+            :key="category._id"
+            :label="category.name"
+            :value="category._id"
+          ></el-option>
         </el-select>
+        
       </el-form-item>
       <el-form-item label="名称">
         <el-input v-model="model.name"></el-input>
