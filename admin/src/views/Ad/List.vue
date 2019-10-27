@@ -2,7 +2,6 @@
   <div>
     <h1>分类列表</h1>
     <el-table :data="categories">
-      <el-table-column prop="parents.name" label="上级分类" width="100"></el-table-column>
       <el-table-column prop="name" label="类别" width="100"></el-table-column>
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
@@ -23,11 +22,11 @@ export default {
   },
   methods: {
     async fetchCategories() {
-      const res = await this.$http.get("rest/categories");
+      const res = await this.$http.get("rest/ads");
       this.categories = res.data;
     },
     editCategory(id) {
-      this.$router.push(`/categories/edit/${id}`);
+      this.$router.push(`/ads/edit/${id}`);
     },
     async removeCategory(category) {
       this.$confirm(`是否确定要删除分类 "${category.name}"`, "提示", {
@@ -36,7 +35,7 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          await this.$http.delete(`rest/categories/${category._id}`);
+          await this.$http.delete(`rest/ads/${category._id}`);
           this.$message({
             type: "success",
             message: "删除成功!"

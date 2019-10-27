@@ -3,7 +3,7 @@
     <h1>{{id ? "编辑" : "新建"}}分类</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
       <el-form-item label="上级分类">
-        <el-select v-model="model.parents">
+        <el-select v-model="Category.parents">
           <el-option
             v-for="category in parents"
             :key="category._id"
@@ -14,7 +14,7 @@
         
       </el-form-item>
       <el-form-item label="名称">
-        <el-input v-model="model.name"></el-input>
+        <el-input v-model="Category.name"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -30,16 +30,16 @@ export default {
   },
   data() {
     return {
-      model: {},
+      Category: {},
       parents: []
     };
   },
   methods: {
     async save() {
       if (this.id) {
-        await this.$http.put(`rest/categories/${this.id}`, this.model);
+        await this.$http.put(`rest/categories/${this.id}`, this.Category);
       } else {
-        await this.$http.post("rest/categories", this.model);
+        await this.$http.post("rest/categories", this.Category);
       }
       this.$router.push("/categories/list");
       this.$message({
@@ -49,7 +49,7 @@ export default {
     },
     async fetch() {
       const res = await this.$http.get(`rest/categories/${this.id}`);
-      this.model = res.data;
+      this.Category = res.data;
     },
     async fetchParents() {
       const res = await this.$http.get(`rest/categories`);

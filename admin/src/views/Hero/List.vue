@@ -49,14 +49,16 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(async () => {
-        await this.$http.delete(`rest/heroes/${rowData._id}`);
-        this.$message({
-          type: "success",
-          message: "删除成功!"
-        });
-        this.fetchData();
-      });
+      })
+        .then(async () => {
+          await this.$http.delete(`rest/heroes/${rowData._id}`);
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+          this.fetchData();
+        })
+        .catch(() => {});
     }
   },
   created() {

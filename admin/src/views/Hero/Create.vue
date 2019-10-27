@@ -1,5 +1,5 @@
 <template>
-  <div class="create">
+  <div>
     <h1>{{id ? "修改" : "创建"}}英雄{{id ? "信息" : ""}}</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
       <el-tabs type="border-card" value="skills">
@@ -166,10 +166,6 @@ export default {
 <style scoped>
 .scores-rate {
   margin-top: 0.64rem;
-}
-
-.mt-1 {
-  margin-top: 1rem;
 }
 
 .el-col.el-col-24.el-col-md-12 {

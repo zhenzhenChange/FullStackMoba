@@ -3,16 +3,17 @@
     <h1>{{id ? "修改" : "新增"}}物品</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
       <el-form-item label="物品名称">
-        <el-input v-model="model.name"></el-input>
+        <el-input v-model="Item.name"></el-input>
       </el-form-item>
       <el-form-item label="物品图标">
         <el-upload
           class="avatar-uploader"
-          :action="$http.defaults.baseURL+'/upload'"
+          :action="uploadURL"
           :show-file-list="false"
+          :headers="getAuthHeaders()"
           :on-success="uploadSuccess"
         >
-          <img v-if="model.icon" :src="model.icon" class="avatar" />
+          <img v-if="Item.icon" :src="Item.icon" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -30,15 +31,15 @@ export default {
   },
   data() {
     return {
-      model: {}
+      Item: {}
     };
   },
   methods: {
     async save() {
       if (this.id) {
-        await this.$http.put(`rest/items/${this.id}`, this.model);
+        await this.$http.put(`rest/items/${this.id}`, this.Item);
       } else {
-        await this.$http.post("rest/items", this.model);
+        await this.$http.post("rest/items", this.Item);
       }
       this.$router.push("/items/list");
       this.$message({
@@ -48,12 +49,12 @@ export default {
     },
     async fetch() {
       const res = await this.$http.get(`rest/items/${this.id}`);
-      this.model = res.data;
+      this.Item = res.data;
     },
     uploadSuccess(res) {
       // this.model.icon = res.url;
       // 显示赋值，icon属性事先未定义
-      this.$set(this.model, "icon", res.url);
+      this.$set(this.Item, "icon", res.url);
     }
   },
   created() {
