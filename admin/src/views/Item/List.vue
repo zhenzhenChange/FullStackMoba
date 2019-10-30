@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div>
     <h1>物品列表</h1>
     <el-table :data="items">
       <el-table-column prop="name" label="物品名称" width="100"></el-table-column>

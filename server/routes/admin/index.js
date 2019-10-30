@@ -3,10 +3,12 @@ module.exports = app => {
   const router = express.Router({
     mergeParams: true
   })
+
   const multer = require("multer")
   const upload = multer({
     dest: __dirname + '/../../uploads'
   })
+
   const AdminUser = require('../../models/AdminUser')
   const bcrypt = require('bcrypt')
   const jwt = require('jsonwebtoken')
@@ -28,6 +30,7 @@ module.exports = app => {
   // 删除
   router.delete('/:id', async (req, res) => {
     await req.Model.findByIdAndDelete(req.params.id, req.body)
+    
     res.send({
       success: true
     })
@@ -39,6 +42,7 @@ module.exports = app => {
     if (req.Model.modelName === 'Category') {
       queryOptions.populate = 'parents'
     }
+
     res.send(await req.Model.find().setOptions(queryOptions).limit(20))
   })
 
@@ -54,6 +58,7 @@ module.exports = app => {
   app.post('/admin/api/upload', authMiddleWare(), upload.single('file'), async (req, res) => {
     const file = req.file
     file.url = `http://localhost:3000/uploads/${file.filename}`
+
     res.send(file)
   })
 
@@ -67,13 +72,16 @@ module.exports = app => {
       username
     }).select('+password')
     HTTPAssert(user, 422, '用户不存在')
+
     const isValid = bcrypt.compareSync(password, user.password)
     HTTPAssert(isValid, 422, "用户名和密码不匹配")
+
     // 生成token
     const token = jwt.sign({
       id: user._id,
       username: user.username
     }, app.get('token'))
+
     res.send({
       token
     })

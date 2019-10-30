@@ -1,5 +1,5 @@
 <template>
-  <div class="create">
+  <div>
     <h1>{{id ? "修改" : "新增"}}物品</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
       <el-form-item label="物品名称">

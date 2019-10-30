@@ -21,8 +21,8 @@
       <el-table-column prop="meleeIdeas" label="团战思路" width="150"></el-table-column>
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
-          <el-button type="text" size="medium" @click="editData(scope.row._id)">编辑</el-button>
-          <el-button type="text" size="medium" @click="removeData(scope.row)">删除</el-button>
+          <el-button type="text" size="medium" @click="editHero(scope.row._id)">编辑</el-button>
+          <el-button type="text" size="medium" @click="removeHero(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -37,32 +37,32 @@ export default {
     };
   },
   methods: {
-    async fetchData() {
+    async fetchHeroes() {
       const res = await this.$http.get("rest/heroes");
       this.heroes = res.data;
     },
-    editData(id) {
+    editHero(id) {
       this.$router.push(`/heroes/edit/${id}`);
     },
-    async removeData(rowData) {
-      this.$confirm(`是否确定要删除分类 "${rowData.name}"`, "提示", {
+    async removeHero(hero) {
+      this.$confirm(`是否确定要删除分类 "${hero.name}"`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(async () => {
-          await this.$http.delete(`rest/heroes/${rowData._id}`);
+          await this.$http.delete(`rest/heroes/${hero._id}`);
           this.$message({
             type: "success",
             message: "删除成功!"
           });
-          this.fetchData();
+          this.fetchHeroes();
         })
         .catch(() => {});
     }
   },
   created() {
-    this.fetchData();
+    this.fetchHeroes();
   }
 };
 </script>

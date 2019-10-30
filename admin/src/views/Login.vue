@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .box-card {
   width: 30rem;
   margin: 10rem auto;

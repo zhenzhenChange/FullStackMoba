@@ -11,7 +11,6 @@
             :value="category._id"
           ></el-option>
         </el-select>
-        
       </el-form-item>
       <el-form-item label="名称">
         <el-input v-model="Category.name"></el-input>

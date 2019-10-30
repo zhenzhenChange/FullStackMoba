@@ -20,15 +20,18 @@ http.interceptors.response.use(res => {
 }, err => {
   const errorMessage = err.response.data.message
   const errorStatus = err.response.status
+
   if (errorMessage) {
     Vue.prototype.$message({
       type: 'error',
       message: errorMessage
     })
   }
-  if(errorStatus === 401){
+
+  if (errorStatus === 401) {
     router.push('/login')
   }
+  
   return Promise.reject(err)
 })
 

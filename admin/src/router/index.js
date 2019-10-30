@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+// 登录 / 主页
 import Login from '../views/Login.vue'
 import Main from '../views/Main.vue'
 
@@ -30,33 +31,98 @@ import AdminUserList from '../views/AdminUser/List.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  { path:'/login', name:'login', component:Login, meta: { isPublic:true} },
+const routes = [{
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta: {
+      isPublic: true
+    }
+  },
   {
     path: '/',
     name: 'main',
     component: Main,
-    children: [
-      { path: '/categories/create', component: CategoryCreate},
-      { path: '/items/create', component: ItemCreate},
-      { path: '/heroes/create', component: HeroCreate},
-      { path: '/articles/create', component: ArticleCreate},
-      { path: '/ads/create', component: AdCreate},
-      { path: '/admin_users/create', component: AdminUserCreate},
+    children: [{
+        path: '/categories/create',
+        component: CategoryCreate
+      },
+      {
+        path: '/items/create',
+        component: ItemCreate
+      },
+      {
+        path: '/heroes/create',
+        component: HeroCreate
+      },
+      {
+        path: '/articles/create',
+        component: ArticleCreate
+      },
+      {
+        path: '/ads/create',
+        component: AdCreate
+      },
+      {
+        path: '/admin_users/create',
+        component: AdminUserCreate
+      },
 
-      { path: '/categories/list', component: CategoryList},
-      { path: '/items/list', component: ItemList},
-      { path: '/heroes/list', component: HeroList},
-      { path: '/articles/list', component: ArticleList},
-      { path: '/ads/list', component: AdList},
-      { path: '/admin_users/list', component: AdminUserList},
+      {
+        path: '/categories/list',
+        component: CategoryList
+      },
+      {
+        path: '/items/list',
+        component: ItemList
+      },
+      {
+        path: '/heroes/list',
+        component: HeroList
+      },
+      {
+        path: '/articles/list',
+        component: ArticleList
+      },
+      {
+        path: '/ads/list',
+        component: AdList
+      },
+      {
+        path: '/admin_users/list',
+        component: AdminUserList
+      },
 
-      { path: '/categories/edit/:id', props: true, component: CategoryCreate},
-      { path: '/items/edit/:id', props: true, component: ItemCreate},
-      { path: '/heroes/edit/:id', props: true, component: HeroCreate},
-      { path: '/articles/edit/:id', props: true, component: ArticleCreate},
-      { path: '/ads/edit/:id', props: true, component: AdCreate},
-      { path: '/admin_users/edit/:id', props: true, component: AdminUserCreate}
+      {
+        path: '/categories/edit/:id',
+        props: true,
+        component: CategoryCreate
+      },
+      {
+        path: '/items/edit/:id',
+        props: true,
+        component: ItemCreate
+      },
+      {
+        path: '/heroes/edit/:id',
+        props: true,
+        component: HeroCreate
+      },
+      {
+        path: '/articles/edit/:id',
+        props: true,
+        component: ArticleCreate
+      },
+      {
+        path: '/ads/edit/:id',
+        props: true,
+        component: AdCreate
+      },
+      {
+        path: '/admin_users/edit/:id',
+        props: true,
+        component: AdminUserCreate
+      }
     ]
   }
 ]
@@ -67,9 +133,10 @@ const router = new VueRouter({
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
-  if(!to.meta.isPublic&&!localStorage.token){
+  if (!to.meta.isPublic && !localStorage.token) {
     return next('/login')
   }
   next()
 })
+
 export default router

@@ -5,24 +5,25 @@
       <el-tabs type="border-card" value="skills">
         <el-tab-pane label="基本信息">
           <el-form-item label="英雄名称">
-            <el-input v-model="model.name"></el-input>
+            <el-input v-model="Hero.name"></el-input>
           </el-form-item>
           <el-form-item label="英雄头像">
             <el-upload
               class="avatar-uploader"
-              :action="$http.defaults.baseURL+'/upload'"
+              :action="uploadURL"
+              :headers="getAuthHeaders()"
               :show-file-list="false"
               :on-success="uploadSuccess"
             >
-              <img v-if="model.via" :src="model.via" class="avatar" />
+              <img v-if="Hero.via" :src="Hero.via" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
           <el-form-item label="英雄称号">
-            <el-input v-model="model.title"></el-input>
+            <el-input v-model="Hero.title"></el-input>
           </el-form-item>
           <el-form-item label="英雄定位">
-            <el-select v-model="model.categories" multiple>
+            <el-select v-model="Hero.categories" multiple>
               <el-option
                 v-for="position in categories"
                 :key="position._id"
@@ -32,52 +33,53 @@
             </el-select>
           </el-form-item>
           <el-form-item label="难度评分">
-            <el-rate :max="9" show-score v-model="model.scores.difficult" class="scores-rate"></el-rate>
+            <el-rate :max="9" show-score v-model="Hero.scores.difficult" class="scores-rate"></el-rate>
           </el-form-item>
           <el-form-item label="技能评分">
-            <el-rate :max="9" show-score v-model="model.scores.skills" class="scores-rate"></el-rate>
+            <el-rate :max="9" show-score v-model="Hero.scores.skills" class="scores-rate"></el-rate>
           </el-form-item>
           <el-form-item label="攻击评分">
-            <el-rate :max="9" show-score v-model="model.scores.attack" class="scores-rate"></el-rate>
+            <el-rate :max="9" show-score v-model="Hero.scores.attack" class="scores-rate"></el-rate>
           </el-form-item>
           <el-form-item label="生存评分">
-            <el-rate :max="9" show-score v-model="model.scores.survive" class="scores-rate"></el-rate>
+            <el-rate :max="9" show-score v-model="Hero.scores.survive" class="scores-rate"></el-rate>
           </el-form-item>
           <el-form-item label="顺风出装">
-            <el-select v-model="model.withItems" multiple>
+            <el-select v-model="Hero.withItems" multiple>
               <el-option v-for="item in items" :key="item._id" :label="item.name" :value="item._id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="逆风出装">
-            <el-select v-model="model.againstItems" multiple>
+            <el-select v-model="Hero.againstItems" multiple>
               <el-option v-for="item in items" :key="item._id" :label="item.name" :value="item._id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="使用技巧">
-            <el-input type="textarea" v-model="model.useSkills"></el-input>
+            <el-input type="textarea" v-model="Hero.useSkills"></el-input>
           </el-form-item>
           <el-form-item label="对抗技巧">
-            <el-input type="textarea" v-model="model.combatSkills"></el-input>
+            <el-input type="textarea" v-model="Hero.combatSkills"></el-input>
           </el-form-item>
           <el-form-item label="团战思路">
-            <el-input type="textarea" v-model="model.meleeIdeas"></el-input>
+            <el-input type="textarea" v-model="Hero.meleeIdeas"></el-input>
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane label="技能管理" name="skills">
           <el-row>
-            <el-button @click="model.skills.push({})">
+            <el-button @click="Hero.skills.push({})">
               <i class="el-icon-plus"></i> 添加技能
             </el-button>
           </el-row>
           <el-row type="flex" style="flex-wrap:wrap;">
-            <el-col class="mt-1" :md="12" v-for="(skill, index) in model.skills" :key="index">
+            <el-col class="mt-1" :md="12" v-for="(skill, index) in Hero.skills" :key="index">
               <el-form-item label="技能名称">
                 <el-input v-model="skill.name"></el-input>
               </el-form-item>
               <el-form-item label="技能图标">
                 <el-upload
                   class="avatar-uploader"
-                  :action="$http.defaults.baseURL+'/upload'"
+                  :action="uploadURL"
+                  :headers="getAuthHeaders()"
                   :show-file-list="false"
                   :on-success="res => $set(skill, 'icon', res.url)"
                 >
@@ -92,7 +94,7 @@
                 <el-input type="textarea" v-model="skill.tips"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button size="small" type="danger" @click="model.skills.splice(index,1)">删除</el-button>
+                <el-button size="small" type="danger" @click="Hero.skills.splice(index,1)">删除</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -112,7 +114,7 @@ export default {
   },
   data() {
     return {
-      model: {
+      Hero: {
         name: "",
         via: "",
         scores: {
@@ -127,9 +129,9 @@ export default {
   methods: {
     async save() {
       if (this.id) {
-        await this.$http.put(`rest/heroes/${this.id}`, this.model);
+        await this.$http.put(`rest/heroes/${this.id}`, this.Hero);
       } else {
-        await this.$http.post("rest/heroes", this.model);
+        await this.$http.post("rest/heroes", this.Hero);
       }
       this.$router.push("/heroes/list");
       this.$message({
@@ -140,12 +142,12 @@ export default {
     async fetch() {
       const res = await this.$http.get(`rest/heroes/${this.id}`);
       // 难点
-      this.model = Object.assign({}, this.model, res.data);
+      this.Hero = Object.assign({}, this.Hero, res.data);
     },
     uploadSuccess(res) {
-      this.model.via = res.url;
+      this.Hero.via = res.url;
       // 显示赋值，icon属性事先未定义
-      // this.$set(this.model, "via", res.url);
+      // this.$set(this.Hero, "via", res.url);
     },
     async fetchPosition() {
       const res = await this.$http.get(`rest/categories`);
