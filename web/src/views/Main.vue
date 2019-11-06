@@ -9,7 +9,7 @@
       <div class="downloadNow"></div>
     </div>
     <div class="nav bg-primary pt-3 pb-2">
-      <div class="nav display-flex text-white justify-content-around pb-1">
+      <div class="nav display-flex nav-inverse justify-content-around pb-1">
         <div class="nav-item active">
           <router-link tag="div" to="/" class="nav-link">首页</router-link>
         </div>
@@ -29,7 +29,15 @@
 export default {};
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import "../assets/scss/_variables.scss";
+
+.topbar{
+  position: sticky;
+  top:0;
+  z-index: 2;
+}
+
 .logo {
   width: 30px;
   height: 30px;
@@ -54,7 +62,16 @@ export default {};
     padding-bottom: 0.2rem;
 
     &.active {
-      border-bottom-color: #fff;
+      color: map-get($colors, "primary");
+      border-bottom-color: map-get($colors, "primary");
+    }
+  }
+  .nav-inverse {
+    .nav-item {
+      color: map-get($colors, "white");
+      &.active {
+        border-bottom-color: map-get($colors, "white");
+      }
     }
   }
 }

@@ -1,12 +1,15 @@
 $colors:("primary":#DB9E3F,
   "info":#4B67AF,
   "white":#FFF,
-  "light":#F9F9F9,
+  "light-f":#F9F9F9,
+  "light-d":#D4D9DE,
   "grey-6":#666,
   "grey-9":#999,
   "dark-3":#343440,
   "dark-2":#222,
   "black":#000);
+
+$border-color:map-get($colors, 'light-d');
 
 $base-font-size:1rem;
 

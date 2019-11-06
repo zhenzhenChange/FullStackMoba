@@ -1,25 +1,49 @@
 <template>
-  <swiper :options="swiperOption">
-    <swiper-slide>
-      <img
-        src="//ossweb-img.qq.com/upload/adw/image/20191104/fd2f601e753cfad90c2d293844c6bcdf.jpeg"
-        class="w-100"
-      />
-    </swiper-slide>
-    <swiper-slide>
-      <img
-        src="//ossweb-img.qq.com/upload/adw/image/20191104/ebacbddb9cd37c6d848a8ee20584e9ce.jpeg"
-        class="w-100"
-      />
-    </swiper-slide>
-    <swiper-slide>
-      <img
-        src="//ossweb-img.qq.com/upload/adw/image/20191104/ae208cd5237513a25cf3dd080b9b17dd.jpeg"
-        class="w-100"
-      />
-    </swiper-slide>
-    <div class="swiper-pagination home-pagination text-right pb-2 pr-3" slot="pagination"></div>
-  </swiper>
+  <div>
+    <swiper :options="swiperOption">
+      <swiper-slide>
+        <img
+          src="//ossweb-img.qq.com/upload/adw/image/20191104/fd2f601e753cfad90c2d293844c6bcdf.jpeg"
+          class="w-100"
+        />
+      </swiper-slide>
+      <swiper-slide>
+        <img
+          src="//ossweb-img.qq.com/upload/adw/image/20191104/ebacbddb9cd37c6d848a8ee20584e9ce.jpeg"
+          class="w-100"
+        />
+      </swiper-slide>
+      <swiper-slide>
+        <img
+          src="//ossweb-img.qq.com/upload/adw/image/20191104/ae208cd5237513a25cf3dd080b9b17dd.jpeg"
+          class="w-100"
+        />
+      </swiper-slide>
+      <div class="swiper-pagination home-pagination text-right pb-2 pr-3" slot="pagination"></div>
+    </swiper>
+    <div class="nav-icons bg-white mt-3 text-center pt-3 text-dark-2">
+      <div class="display-flex flex-wrap">
+        <div class="nav-item mb-3 pt-1" v-for="(icon,index) in icons" :key="index">
+          <i :class="icon.class" class="icon"></i>
+          <div class="py-2">{{icon.title}}</div>
+        </div>
+      </div>
+      <div class="py-2 bg-light-f">
+        <i class="icon icon-arrow mr-1"></i>
+        <span>收起</span>
+      </div>
+    </div>
+    <home-list-card icon="news" title="新闻资讯" :categories="newCats">
+      <template #items="{category}">
+        <div v-for="(item,index) in category.newList" :key="index" class="py-2 display-flex">
+          <span>[{{item.categoryName}}]</span>
+          <span class="px-1">|</span>
+          <span class="flex-1 text-ellipsis pr-2">{{item.newTitle}}</span>
+          <span class="font-size-xs text-grey-9">{{item.newDate}}</span>
+        </div>
+      </template>
+    </home-list-card>
+  </div>
 </template>
 
 <script>
@@ -36,7 +60,173 @@ export default {
           delay: 3000
         },
         speed: 1000
-      }
+      },
+      icons: [
+        { class: "icon-fact", title: "爆料站" },
+        { class: "icon-story", title: "故事站" },
+        { class: "icon-mall", title: "周边商城" },
+        { class: "icon-serving", title: "体验服" },
+        { class: "icon-couple", title: "新人专区" },
+        { class: "icon-glory", title: "荣耀·传承" },
+        { class: "icon-data", title: "模拟站资料库" },
+        { class: "icon-camp", title: "王者营地" },
+        { class: "icon-public", title: "公众号" },
+        { class: "icon-version", title: "版本介绍" },
+        { class: "icon-game", title: "对局环境" },
+        { class: "icon-king", title: "无限王者团" }
+      ],
+      newCats: [
+        {
+          category: "热门",
+          newList: [
+            {
+              categoryName: "公告",
+              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "公告",
+              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "公告",
+              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "公告",
+              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "公告",
+              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
+              newDate: "06/03"
+            }
+          ]
+        },
+        {
+          category: "新闻",
+          newList: [
+            {
+              categoryName: "新闻",
+              newTitle: "新闻新闻新闻新闻新闻",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "新闻",
+              newTitle: "新闻新闻新闻新闻新闻",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "新闻",
+              newTitle: "新闻新闻新闻新闻新闻",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "新闻",
+              newTitle: "新闻新闻新闻新闻新闻",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "新闻",
+              newTitle: "新闻新闻新闻新闻新闻",
+              newDate: "06/03"
+            }
+          ]
+        },
+        {
+          category: "公告",
+          newList: [
+            {
+              categoryName: "公告",
+              newTitle: "公告公告公告公告公告",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "公告",
+              newTitle: "公告公告公告公告公告",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "公告",
+              newTitle: "公告公告公告公告公告",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "公告",
+              newTitle: "公告公告公告公告公告",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "公告",
+              newTitle: "公告公告公告公告公告",
+              newDate: "06/03"
+            }
+          ]
+        },
+        {
+          category: "活动",
+          newList: [
+            {
+              categoryName: "活动",
+              newTitle: "活动活动活动活动活动",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "活动",
+              newTitle: "活动活动活动活动活动",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "活动",
+              newTitle: "活动活动活动活动活动",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "活动",
+              newTitle: "活动活动活动活动活动",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "活动",
+              newTitle: "活动活动活动活动活动",
+              newDate: "06/03"
+            }
+          ]
+        },
+        {
+          category: "赛事",
+          newList: [
+            {
+              categoryName: "赛事",
+              newTitle: "赛事赛事赛事赛事赛事",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "赛事",
+              newTitle: "赛事赛事赛事赛事赛事",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "赛事",
+              newTitle: "赛事赛事赛事赛事赛事",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "赛事",
+              newTitle: "赛事赛事赛事赛事赛事",
+              newDate: "06/03"
+            },
+            {
+              categoryName: "赛事",
+              newTitle: "赛事赛事赛事赛事赛事",
+              newDate: "06/03"
+            }
+          ]
+        }
+      ]
     };
   }
 };
@@ -45,12 +235,24 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_variables.scss";
 .home-pagination {
-  /deep/ .swiper-pagination-bullet {
+  .swiper-pagination-bullet {
     opacity: 1;
     border-radius: 2px;
     background-color: map-get($colors, "white");
     &.swiper-pagination-bullet-active {
       background-color: map-get($colors, "info");
+    }
+  }
+}
+
+.nav-icons {
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  .nav-item {
+    width: 25%;
+    border-right: 1px solid $border-color;
+    &:nth-of-type(4n) {
+      border-right: 0;
     }
   }
 }
