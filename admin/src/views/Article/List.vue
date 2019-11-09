@@ -2,7 +2,7 @@
   <div class="list">
     <h1>文章列表</h1>
     <el-table :data="articles">
-      <el-table-column prop="title" label="文章标题" width="100"></el-table-column>
+      <el-table-column prop="title" label="文章标题" width="550"></el-table-column>
       <el-table-column prop="body" label="文章正文" width="100">
         <template slot-scope="scope">
           <div v-html="scope.row.body"></div>
@@ -56,3 +56,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+/* .el-table td,
+.el-table th {
+  text-align: left !important;
+} */
+</style>

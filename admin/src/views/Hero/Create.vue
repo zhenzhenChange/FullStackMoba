@@ -2,55 +2,75 @@
   <div>
     <h1>{{id ? "修改" : "创建"}}英雄{{id ? "信息" : ""}}</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
-      <el-tabs type="border-card" value="skills">
-        <el-tab-pane label="基本信息">
-          <el-form-item label="英雄名称">
-            <el-input v-model="Hero.name"></el-input>
-          </el-form-item>
-          <el-form-item label="英雄头像">
-            <el-upload
-              class="avatar-uploader"
-              :action="uploadURL"
-              :headers="getAuthHeaders()"
-              :show-file-list="false"
-              :on-success="uploadSuccess"
-            >
-              <img v-if="Hero.via" :src="Hero.via" class="avatar" />
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-form-item>
-          <el-form-item label="英雄称号">
-            <el-input v-model="Hero.title"></el-input>
-          </el-form-item>
-          <el-form-item label="英雄定位">
-            <el-select v-model="Hero.categories" multiple>
-              <el-option
-                v-for="position in categories"
-                :key="position._id"
-                :label="position.name"
-                :value="position._id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="难度评分">
-            <el-rate :max="9" show-score v-model="Hero.scores.difficult" class="scores-rate"></el-rate>
-          </el-form-item>
-          <el-form-item label="技能评分">
-            <el-rate :max="9" show-score v-model="Hero.scores.skills" class="scores-rate"></el-rate>
-          </el-form-item>
-          <el-form-item label="攻击评分">
-            <el-rate :max="9" show-score v-model="Hero.scores.attack" class="scores-rate"></el-rate>
-          </el-form-item>
-          <el-form-item label="生存评分">
-            <el-rate :max="9" show-score v-model="Hero.scores.survive" class="scores-rate"></el-rate>
-          </el-form-item>
+      <el-tabs type="border-card" value="baseInfo">
+        <el-tab-pane label="基本信息" name="baseInfo">
+          <el-row>
+            <el-col :span="6">
+              <el-form-item>
+                <el-upload
+                  class="avatar-uploader"
+                  :action="uploadURL"
+                  :headers="getAuthHeaders()"
+                  :show-file-list="false"
+                  :on-success="uploadSuccess"
+                >
+                  <img v-if="Hero.via" :src="Hero.via" class="avatar" />
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="英雄名称">
+                <el-input v-model="Hero.name" class="w-100"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="英雄称号">
+                <el-input v-model="Hero.title" class="w-100"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="英雄定位">
+                <el-select v-model="Hero.categories" multiple>
+                  <el-option
+                    v-for="position in categories"
+                    :key="position._id"
+                    :label="position.name"
+                    :value="position._id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="难度评分">
+                <el-rate :max="9" show-score v-model="Hero.scores.difficult" class="scores-rate"></el-rate>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="技能评分">
+                <el-rate :max="9" show-score v-model="Hero.scores.skills" class="scores-rate"></el-rate>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="攻击评分">
+                <el-rate :max="9" show-score v-model="Hero.scores.attack" class="scores-rate"></el-rate>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="生存评分">
+                <el-rate :max="9" show-score v-model="Hero.scores.survive" class="scores-rate"></el-rate>
+              </el-form-item>
+            </el-col>
+          </el-row>
           <el-form-item label="顺风出装">
-            <el-select v-model="Hero.withItems" multiple>
+            <el-select v-model="Hero.withItems" multiple class="checkItem">
               <el-option v-for="item in items" :key="item._id" :label="item.name" :value="item._id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="逆风出装">
-            <el-select v-model="Hero.againstItems" multiple>
+            <el-select v-model="Hero.againstItems" multiple class="checkItem">
               <el-option v-for="item in items" :key="item._id" :label="item.name" :value="item._id"></el-option>
             </el-select>
           </el-form-item>
@@ -172,5 +192,13 @@ export default {
 
 .el-col.el-col-24.el-col-md-12 {
   border-bottom: 0.1rem #bfc1c4 dotted;
+}
+
+.checkItem {
+  width: 100%;
+}
+
+.w-100 >>> .el-input__inner {
+  width: 10rem;
 }
 </style>

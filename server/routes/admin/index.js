@@ -30,7 +30,7 @@ module.exports = app => {
   // 删除
   router.delete('/:id', async (req, res) => {
     await req.Model.findByIdAndDelete(req.params.id, req.body)
-    
+
     res.send({
       success: true
     })
@@ -43,7 +43,7 @@ module.exports = app => {
       queryOptions.populate = 'parents'
     }
 
-    res.send(await req.Model.find().setOptions(queryOptions).limit(20))
+    res.send(await req.Model.find().setOptions(queryOptions).limit(200))
   })
 
   // 编辑返回

@@ -9,7 +9,7 @@
           <img :src="scope.row.via" width="50" />
         </template>
       </el-table-column>
-      <el-table-column prop="categories" label="英雄定位" width="100"></el-table-column>
+      <!-- <el-table-column prop="categories" label="英雄定位" width="100"></el-table-column>
       <el-table-column prop="scores.difficult" label="难度评分" width="90"></el-table-column>
       <el-table-column prop="scores.skills" label="技能评分" width="90"></el-table-column>
       <el-table-column prop="scores.attack" label="攻击评分" width="90"></el-table-column>
@@ -18,7 +18,7 @@
       <el-table-column prop="againstItems" label="逆风出装" width="150"></el-table-column>
       <el-table-column prop="useSkills" label="使用技巧" width="150"></el-table-column>
       <el-table-column prop="combatSkills" label="对抗技巧" width="150"></el-table-column>
-      <el-table-column prop="meleeIdeas" label="团战思路" width="150"></el-table-column>
+      <el-table-column prop="meleeIdeas" label="团战思路" width="150"></el-table-column> -->
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-button type="text" size="medium" @click="editHero(scope.row._id)">编辑</el-button>
@@ -33,13 +33,17 @@
 export default {
   data() {
     return {
-      heroes: []
+      heroes: [],
+      categories: [],
+      withItems: [],
+      againstItems: []
     };
   },
   methods: {
     async fetchHeroes() {
       const res = await this.$http.get("rest/heroes");
       this.heroes = res.data;
+      // this.fetchItemsPositions();
     },
     editHero(id) {
       this.$router.push(`/heroes/edit/${id}`);
@@ -60,6 +64,17 @@ export default {
         })
         .catch(() => {});
     }
+    /* async fetchItemsPositions() {
+      this.heroes.map(items => {
+        this.categories.push(items.categories);
+        this.withItems.push(items.withItems);
+        this.againstItems.push(items.againstItems);
+      });
+      const resCategories = await this.$http.get(`rest/categories`);
+      this.categories = resCategories.data;
+      const resItems = await this.$http.get(`rest/items`);
+      this.items = resItems.data;
+    } */
   },
   created() {
     this.fetchHeroes();

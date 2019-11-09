@@ -11,6 +11,11 @@ const schema = mongoose.Schema({
   body: {
     type: String
   }
+}, {
+  timestamps: {
+    createdAt: 'created',
+    updatedAt: 'updated'
+  }
 })
 
 module.exports = mongoose.model('Article', schema)

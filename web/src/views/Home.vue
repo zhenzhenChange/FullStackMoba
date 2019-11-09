@@ -36,10 +36,10 @@
     <home-list-card icon="news" title="新闻资讯" :categories="newCats">
       <template #items="{category}">
         <div v-for="(item,index) in category.newList" :key="index" class="py-2 display-flex">
-          <span>[{{item.categoryName}}]</span>
+          <span class="text-info">[{{item.categoryName}}]</span>
           <span class="px-1">|</span>
-          <span class="flex-1 text-ellipsis pr-2">{{item.newTitle}}</span>
-          <span class="font-size-xs text-grey-9">{{item.newDate}}</span>
+          <span class="flex-1 text-ellipsis pr-2">{{item.title}}</span>
+          <span class="font-size-xs text-grey-9">{{item.created | date}}</span>
         </div>
       </template>
     </home-list-card>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import dayjs from "dayjs";
 export default {
   data() {
     return {
@@ -75,159 +76,22 @@ export default {
         { class: "icon-game", title: "对局环境" },
         { class: "icon-king", title: "无限王者团" }
       ],
-      newCats: [
-        {
-          category: "热门",
-          newList: [
-            {
-              categoryName: "公告",
-              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "公告",
-              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "公告",
-              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "公告",
-              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "公告",
-              newTitle: "更新公告更新公告更新公告更新公告更新公告更新公告",
-              newDate: "06/03"
-            }
-          ]
-        },
-        {
-          category: "新闻",
-          newList: [
-            {
-              categoryName: "新闻",
-              newTitle: "新闻新闻新闻新闻新闻",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "新闻",
-              newTitle: "新闻新闻新闻新闻新闻",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "新闻",
-              newTitle: "新闻新闻新闻新闻新闻",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "新闻",
-              newTitle: "新闻新闻新闻新闻新闻",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "新闻",
-              newTitle: "新闻新闻新闻新闻新闻",
-              newDate: "06/03"
-            }
-          ]
-        },
-        {
-          category: "公告",
-          newList: [
-            {
-              categoryName: "公告",
-              newTitle: "公告公告公告公告公告",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "公告",
-              newTitle: "公告公告公告公告公告",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "公告",
-              newTitle: "公告公告公告公告公告",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "公告",
-              newTitle: "公告公告公告公告公告",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "公告",
-              newTitle: "公告公告公告公告公告",
-              newDate: "06/03"
-            }
-          ]
-        },
-        {
-          category: "活动",
-          newList: [
-            {
-              categoryName: "活动",
-              newTitle: "活动活动活动活动活动",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "活动",
-              newTitle: "活动活动活动活动活动",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "活动",
-              newTitle: "活动活动活动活动活动",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "活动",
-              newTitle: "活动活动活动活动活动",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "活动",
-              newTitle: "活动活动活动活动活动",
-              newDate: "06/03"
-            }
-          ]
-        },
-        {
-          category: "赛事",
-          newList: [
-            {
-              categoryName: "赛事",
-              newTitle: "赛事赛事赛事赛事赛事",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "赛事",
-              newTitle: "赛事赛事赛事赛事赛事",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "赛事",
-              newTitle: "赛事赛事赛事赛事赛事",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "赛事",
-              newTitle: "赛事赛事赛事赛事赛事",
-              newDate: "06/03"
-            },
-            {
-              categoryName: "赛事",
-              newTitle: "赛事赛事赛事赛事赛事",
-              newDate: "06/03"
-            }
-          ]
-        }
-      ]
+      newCats: []
     };
+  },
+  filters: {
+    date(value) {
+      return dayjs(value).format("MM/DD");
+    }
+  },
+  methods: {
+    async fetchNewList() {
+      const res = await this.$http.get("/news/list");
+      this.newCats = res.data;
+    }
+  },
+  created() {
+    this.fetchNewList();
   }
 };
 </script>
