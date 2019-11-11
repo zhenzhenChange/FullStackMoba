@@ -6,12 +6,12 @@
         :class="{ active:active === index }"
         v-for="(category,index) in categories"
         :key="index"
-        @click="$refs.list.swiper.slideTo(index)"
+        @click="swiperTo(index)"
       >
         <div class="nav-link">{{category.name}}</div>
       </div>
     </div>
-    <swiper class="mt-3" ref="list" @slide-change="()=>active=$refs.list.swiper.realIndex">
+    <swiper class="mt-3" ref="list" @slide-change="slideChange" :options="swiperOption">
       <swiper-slide v-for="(category,index) in categories" :key="index">
         <slot name="items" :category="category"></slot>
       </swiper-slide>
@@ -28,8 +28,19 @@ export default {
   },
   data() {
     return {
-      active: 0
+      active: 0,
+      swiperOption: {
+        autoHeight: true
+      }
     };
+  },
+  methods: {
+    slideChange() {
+      this.active = this.$refs.list.swiper.realIndex;
+    },
+    swiperTo(index) {
+      this.$refs.list.swiper.slideTo(index);
+    }
   }
 };
 </script>

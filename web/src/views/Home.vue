@@ -35,11 +35,29 @@
     </div>
     <home-list-card icon="news" title="新闻资讯" :categories="newCats">
       <template #items="{category}">
-        <div v-for="(item,index) in category.newList" :key="index" class="py-2 display-flex">
+        <router-link
+          :to="`/articles/${item._id}`"
+          tag="div"
+          v-for="(item,index) in category.newList"
+          :key="index"
+          class="py-2 display-flex"
+        >
           <span class="text-info">[{{item.categoryName}}]</span>
           <span class="px-1">|</span>
           <span class="flex-1 text-ellipsis pr-2">{{item.title}}</span>
           <span class="font-size-xs text-grey-9">{{item.created | date}}</span>
+        </router-link>
+      </template>
+    </home-list-card>
+    <home-list-card icon="heroes" title="英雄列表" :categories="heroCats">
+      <template #items="{category}">
+        <div class="display-flex flex-wrap m--5">
+          <div v-for="(item,index) in category.heroList" :key="index" class="px-2 text-center w-20">
+            <div class="pb-3">
+              <img :src="item.via" class="w-100 pb-1" />
+              <div>{{item.name}}</div>
+            </div>
+          </div>
         </div>
       </template>
     </home-list-card>
@@ -76,7 +94,8 @@ export default {
         { class: "icon-game", title: "对局环境" },
         { class: "icon-king", title: "无限王者团" }
       ],
-      newCats: []
+      newCats: [],
+      heroCats: []
     };
   },
   filters: {
@@ -85,13 +104,15 @@ export default {
     }
   },
   methods: {
-    async fetchNewList() {
-      const res = await this.$http.get("/news/list");
-      this.newCats = res.data;
+    async fetchDataList() {
+      const newsRes = await this.$http.get("/news/list");
+      const heroesRes = await this.$http.get("/heroes/list");
+      this.newCats = newsRes.data;
+      this.heroCats = heroesRes.data;
     }
   },
   created() {
-    this.fetchNewList();
+    this.fetchDataList();
   }
 };
 </script>
@@ -119,5 +140,9 @@ export default {
       border-right: 0;
     }
   }
+}
+
+.m--5 {
+  margin: 0 -0.5rem;
 }
 </style>

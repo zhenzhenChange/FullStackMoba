@@ -32,28 +32,29 @@ export default {};
 <style lang="scss">
 @import "../assets/scss/_variables.scss";
 
-.topbar{
+.topbar {
   position: sticky;
-  top:0;
+  top: 0;
   z-index: 2;
+}
+
+.logo,
+.downloadNow {
+  background-image: url(../assets/images/index.png);
+  background-repeat: no-repeat;
+  background-size: 375px 455px;
 }
 
 .logo {
   width: 30px;
   height: 30px;
-  background-image: url(../assets/images/index.png);
-  background-repeat: no-repeat;
   background-position: 0 72.588%;
-  background-size: 375px 455px;
 }
 
 .downloadNow {
   width: 60px;
   height: 24px;
-  background-image: url(../assets/images/index.png);
-  background-repeat: no-repeat;
   background-position: 18.73% 71.694%;
-  background-size: 375px 455px;
 }
 
 .nav {

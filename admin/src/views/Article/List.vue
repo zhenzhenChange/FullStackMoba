@@ -3,11 +3,11 @@
     <h1>文章列表</h1>
     <el-table :data="articles">
       <el-table-column prop="title" label="文章标题" width="550"></el-table-column>
-      <el-table-column prop="body" label="文章正文" width="100">
+      <!-- <el-table-column prop="body" label="文章正文" width="550">
         <template slot-scope="scope">
           <div v-html="scope.row.body"></div>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-button type="text" size="medium" @click="editArticle(scope.row._id)">编辑</el-button>
