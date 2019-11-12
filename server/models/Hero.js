@@ -7,6 +7,9 @@ const schema = mongoose.Schema({
   via: { // 英雄头像
     type: String
   },
+  banner: { // 英雄背景
+    type: String
+  },
   title: { // 英雄称号
     type: String
   },
@@ -33,6 +36,12 @@ const schema = mongoose.Schema({
       type: String
     },
     name: { // 技能名称
+      type: String
+    },
+    delay: { // 技能冷却值
+      type: String
+    },
+    cost: { // 技能消耗
       type: String
     },
     description: { // 技能描述

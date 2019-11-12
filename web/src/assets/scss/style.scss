@@ -49,12 +49,38 @@ body {
   flex-grow: 1;
 }
 
+.line-height-1 {
+  line-height: 1.4rem;
+}
+
 a {
   color: map-get($colors, "grey-9");
 }
 
 p {
   line-height: 1.6em;
+}
+
+.btn {
+  display: inline-block;
+  border: 0;
+  border-radius: .1538rem;
+  font-size: map-get($font-sizes, 'sm')*$base-font-size;
+  padding: .2rem .6rem;
+
+  .icon {
+    margin-right: .5rem;
+  }
+
+  &.btn-lg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: map-get($colors, 'white-f');
+    border: 1px solid map-get($colors, 'white-e');
+    padding: .8rem 1rem;
+    font-size: 1.1rem;
+  }
 }
 
 .icon {

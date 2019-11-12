@@ -9,7 +9,7 @@
           <img :src="scope.row.via" width="50" />
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="categories" label="英雄定位" width="100"></el-table-column>
+      <!-- <el-table-column prop="categories.map(position => position.name).join('/')" label="英雄定位" width="100"></el-table-column>
       <el-table-column prop="scores.difficult" label="难度评分" width="90"></el-table-column>
       <el-table-column prop="scores.skills" label="技能评分" width="90"></el-table-column>
       <el-table-column prop="scores.attack" label="攻击评分" width="90"></el-table-column>

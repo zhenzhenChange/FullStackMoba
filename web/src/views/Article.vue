@@ -1,7 +1,9 @@
 <template>
   <div v-if="article">
     <div class="display-flex py-3 border-bottom px-1">
-      <div class="text-blue">返回</div>
+      <routerLink to class="text-blue font-size-xl" tag="div">
+        <span @click="$router.go(-1)">&lt;</span>
+      </routerLink>
       <strong class="flex-1 text-ellipsis px-2 text-blue">{{article.title}}</strong>
       <div class="text-grey-6 font-size-xs">{{article.created | date}}</div>
     </div>

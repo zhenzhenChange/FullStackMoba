@@ -52,12 +52,18 @@
     <home-list-card icon="heroes" title="英雄列表" :categories="heroCats">
       <template #items="{category}">
         <div class="display-flex flex-wrap m--5">
-          <div v-for="(item,index) in category.heroList" :key="index" class="px-2 text-center w-20">
+          <routerLink
+            :to="`/heroes/${item._id}`"
+            tag="div"
+            v-for="(item,index) in category.heroList"
+            :key="index"
+            class="px-2 text-center w-20"
+          >
             <div class="pb-3">
               <img :src="item.via" class="w-100 pb-1" />
               <div>{{item.name}}</div>
             </div>
-          </div>
+          </routerLink>
         </div>
       </template>
     </home-list-card>
