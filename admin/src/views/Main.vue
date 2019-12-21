@@ -54,6 +54,7 @@
         <el-button @click="logout">退出登录</el-button>
       </el-header>
       <el-main>
+        <!-- :key="$route.path" 根据路由区分【编辑页】或【新建页】 -->
         <router-view :key="$route.path" />
       </el-main>
     </el-container>
